@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Copy your app into the container
-COPY . /var/www/html/
+COPY public/ /var/www/html/
 
 # Set working directory
 WORKDIR /var/www/html/
