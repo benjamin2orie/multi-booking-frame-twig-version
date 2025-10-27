@@ -1,9 +1,13 @@
-
 # Use official PHP image with Apache
 FROM php:8.2-apache
 
-# Install required PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql
+# Install required PHP extensions and tools
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install pdo pdo_mysql
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -17,7 +21,7 @@ WORKDIR /var/www/html/
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install dependencies
+# ✅ Install dependencies (now with git + unzip available)
 RUN composer install
 
 # Set permissions
