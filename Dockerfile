@@ -12,17 +12,20 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy your app into the container
-COPY public/ /var/www/html/
+# ✅ Copy everything (not just public/)
+COPY . /var/www/app/
 
 # Set working directory
-WORKDIR /var/www/html/
+WORKDIR /var/www/app/
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# ✅ Install dependencies (now with git + unzip available)
+# ✅ Install dependencies from root
 RUN composer install
+
+# ✅ Move public folder to Apache's root
+RUN cp -r public/* /var/www/html/
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html
