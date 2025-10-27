@@ -1,4 +1,7 @@
-/node_modules
-.vs_code
-/dist
-/build
+
+
+vendor/
+*.log
+.env
+node_modules/
+.DS_Store
