@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang ="en">
+<meta charset ="UTF-8">
+<head>
+ <title>Ticket App</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class ="max-w-[1440px]">
+{% include '_header.twig' %}
+{% block content %}
+<main class="max-w-[1440px] mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-4">Ticket Manager</h1>
+
+  {% if error %}
+    <p class="text-red-500 py-5">{{ error }}</p>
+  {% endif %}
+
+  <!-- Ticket Form -->
+  <form method="post" action="/?page=tickets" class="mb-6 flex flex-wrap gap-2 items-center">
+    <input type="hidden" name="id" value="{{ form.id ?? '' }}" />
+    <input type="text" name="title" placeholder="Title" value="{{ form.title ?? '' }}" class="border p-2 rounded w-full sm:w-auto flex-grow" required />
+
+    <textarea name="description" placeholder="Description" class="w-full p-2 border rounded h-24 resize-none" required>{{ form.description ?? '' }}</textarea>
+
+    <select name="priority" class="w-full p-2 border rounded" required>
+      <option value="">Select Priority</option>
+      <option value="low" {% if form.priority == 'low' %}selected{% endif %}>Low</option>
+      <option value="medium" {% if form.priority == 'medium' %}selected{% endif %}>Medium</option>
+      <option value="high" {% if form.priority == 'high' %}selected{% endif %}>High</option>
+    </select>
+
+    <select name="status" class="border p-2 rounded w-full sm:w-auto" required>
+      <option value="open" {% if form.status == 'open' %}selected{% endif %}>Open</option>
+      <option value="in_progress" {% if form.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+      <option value="closed" {% if form.status == 'closed' %}selected{% endif %}>Closed</option>
+    </select>
+
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 cursor-pointer">
+      {{ editing ? 'Update Ticket' : 'Add Ticket' }}
+    </button>
+  </form>
+
+  <!-- Ticket List -->
+  <section class="grid gap-4">
+    {% for ticket in tickets %}
+      <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+        <div>
+          <h2 class="text-lg font-semibold">{{ ticket.title }}</h2>
+          <h3>{{ ticket.description }}</h3>
+          <p class="flex gap-4">status:
+            <span class="text-sm px-2 py-1 rounded
+              {% if ticket.status == 'open' %}bg-green-100 text-green-700
+              {% elseif ticket.status == 'in_progress' %}bg-yellow-100 text-yellow-700
+              {% else %}bg-gray-200 text-gray-700{% endif %}">
+              {{ ticket.status|replace({'_': ' '}) }}
+            </span>
+          </p>
+          <h5>{{ ticket.priority }}</h5>
+        </div>
+        <div class="flex gap-2">
+          <a href="/?page=tickets&edit={{ ticket.id }}" class="text-blue-600 hover:underline">Edit</a>
+          <a href="/?page=tickets&delete={{ ticket.id }}" class="text-red-600 hover:underline">Delete</a>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+</main>
+{% endblock %}
+
+</body>
+</html>
