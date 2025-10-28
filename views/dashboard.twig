@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang ="en">
-<meta charset ="UTF-8">
+
 <head>
+<meta charset ="UTF-8">
  <title>Ticket App</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class ="max-w-[1440px]">
+<body>
 {% include '_header.twig' %}
 {% block content %}
-<div class="max-w-[1440px] mx-auto p-6">
+<div class="lg:max-w-[1440px] lg:px-[5em] mx-auto p-6 flex flex-col justify-center mt-[4em] lg:mt-0">
   <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

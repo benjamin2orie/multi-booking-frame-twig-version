@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang ="en">
-<meta charset ="UTF-8">
+
 <head>
+<meta charset ="UTF-8">
  <title>Ticket App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class ="max-w-[1440px]">
-<header class="bg-white shadow p-4 flex lg:flex-row md:flex-row flex-row justify-between lg:items-center lg:w-full lg:px-[5em] md:px-[2em] sticky lg:top-0  z-50 gap-6">
-  <a href="/" class="text-xl font-bold text-indigo-600">🎟️ TicketApp</a>
+<body>
+<header class="bg-white shadow lg:p-4 p-10 flex flex-row justify-between lg:items-center lg:px-[10em] md:px-[10em] sticky lg:top-0  z-50 gap-6">
+  <a href="/" class="lg:text-xl text-[16px] font-bold text-indigo-600">🎟️ TicketApp</a>
 
   {% if isAuthenticated and user %}
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center uppercase">
+        <div class="lg:w-8 w-3 lg:h-8 h-3 rounded-full bg-indigo-500 text-white flex items-center justify-center uppercase">
           {{ user.email[0] }}
         </div>
-        <span class="text-sm text-gray-700">{{ user.email }}</span>
+        <span class="lg:text-sm text-[16px] text-gray-700">{{ user.email }}</span>
       </div>
       {% if location != '/dashboard' %}
         <form method="post" action="/logout">
